@@ -6,6 +6,7 @@ from weights_generator.feedback_weights.RandomFeedbackWeightsGenerator import Ra
 from data.MackeyGlassSeries import MackeyGlassSeries
 from pylab import *
 from train.LinearRegressionTrainer import LinearRegressionTrainer
+from test.NrmseTester import NrmseTester
 
 
 if __name__ == '__main__':
@@ -20,8 +21,9 @@ if __name__ == '__main__':
     test_data_x = np.ones((1000, 1)) * 0.2
     test_data_y = MackeyGlassSeries().generate_data(16, 1000)
 
-    data = {'train': {'x': train_data_x, 'y': train_data_y},
-            'test':  {'x': test_data_x,  'y': test_data_y}}
+    train_data = {'x': train_data_x, 'y': train_data_y}
+    test_data  = {'x': test_data_x,  'y': test_data_y}
 
-    esn.train(data=data, trainer=LinearRegressionTrainer())
+    esn.train(data=train_data, trainer=LinearRegressionTrainer())
+    esn.test(data=test_data, tester=NrmseTester())
 

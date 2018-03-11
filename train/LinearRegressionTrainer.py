@@ -9,11 +9,11 @@ class LinearRegressionTrainer(Trainer):
         Trainer.__init__(self)
 
     def train(self, esn, data):
+        train_x, train_y = Util.extract_data(data=data)
         state_collect_matrix = np.zeros((TRAIN_RUN_LENGTH, esn.input_dimension + esn.reservoir_dimension))
         target_collect_matrix = np.zeros((TRAIN_RUN_LENGTH, esn.output_dimension))
-        [train_x, train_y], [_, _] = Util.extract_train_and_test_data(data=data)
         total_state = np.zeros((esn.input_dimension + esn.reservoir_dimension + esn.output_dimension, 1))
-        sample_length = len(train_x[1, :])
+        sample_length = train_x.shape[0]
         for t in range(sample_length):
             u = train_x[t, :]
             target_output = train_y[t, :]

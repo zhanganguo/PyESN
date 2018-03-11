@@ -41,3 +41,6 @@ class ESN:
     def train(self, data, trainer):
         trainer.train(esn=self, data=data)
 
+    def test(self, data, tester):
+        tester.test(esn=self, data=data)
+
