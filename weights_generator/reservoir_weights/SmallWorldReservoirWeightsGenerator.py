@@ -1,7 +1,7 @@
 from weights_generator.reservoir_weights.ReservoirWeightsGenerator import ReservoirWeightsGenerator
 
 
-class RandomReservoirWeightsGenerator(ReservoirWeightsGenerator):
+class SmallWorldReservoirWeightsGenerator(ReservoirWeightsGenerator):
     def __init__(self):
         ReservoirWeightsGenerator.__init__(self)
 
