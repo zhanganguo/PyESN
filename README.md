@@ -2,8 +2,8 @@
 Echo State Network (Reservoir Computing) Coded by pure Python
 
 ## Requirements:
-Python 3.X
-numpy
+Python 3.X, 
+numpy, 
 matplotlib
 
 ## Description
