@@ -34,4 +34,9 @@ class MackeyGlassSeries(Data):
 
         mgs = np.tanh(np.subtract(mgs, 1.0))
 
+        with open('data/MackeyGlass_t'+str(tau)+'.txt', 'w') as f:
+            for n in range(series_length):
+                f.write(str(mgs[n, 0]) + '\n')
+            f.flush()
+
         return mgs

@@ -1,6 +1,4 @@
-import scipy.linalg
 from weights_generator.reservoir_weights.ReservoirWeightsGenerator import ReservoirWeightsGenerator
-from numpy import *
 
 
 class RandomReservoirWeightsGenerator(ReservoirWeightsGenerator):
@@ -8,8 +6,6 @@ class RandomReservoirWeightsGenerator(ReservoirWeightsGenerator):
         ReservoirWeightsGenerator.__init__(self)
 
     def generate_reservoir_weights(self, esn):
-        reservoir_dimension = esn.reservoir_dimension
-        reservoir_weights = random.rand(reservoir_dimension, reservoir_dimension) - 0.5
-        rhoW = max(abs(scipy.linalg.eig(reservoir_weights)[0]))
-        reservoir_weights *= esn.spectral_radius / rhoW
+        reservoir_weights = None
+        # To be implemented
         return reservoir_weights

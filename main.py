@@ -1,29 +1,20 @@
-import ESN
+from numpy import *
+from ESN import ESN
 from weights_generator.input_weights.RandomInputWeightsGenerator import RandomInputWeightsGenerator
 from weights_generator.reservoir_weights.RandomReservoirWeightsGenerator import RandomReservoirWeightsGenerator
-from weights_generator.output_weights.RandomOutputWeightsGenerator import RandomOutputWeightsGenerator
-from weights_generator.feedback_weights.RandomFeedbackWeightsGenerator import RandomFeedbackWeightsGenerator
+from trainer.LinearRegressionTrainer import LinearRegressionTrainer
+from tester.NrmseTester import NrmseTester
 from data.MackeyGlassSeries import MackeyGlassSeries
-from pylab import *
-from train.LinearRegressionTrainer import LinearRegressionTrainer
-from test.NrmseTester import NrmseTester
 
 
-if __name__ == '__main__':
-    esn = ESN.ESN(1, 400, 1)
-    esn.generate_input_weights(input_weights_generator=RandomInputWeightsGenerator())
-    esn.generate_reservoir_weights(reservoir_weights_generator=RandomReservoirWeightsGenerator())
-    esn.generate_output_weights(output_weights_generator=RandomOutputWeightsGenerator())
-    esn.generate_feedback_weights(feedback_weights_generator=RandomFeedbackWeightsGenerator())
+MackeyGlassSeries().generate_data(tau=16, series_length=10000)
+data = loadtxt('data/MackeyGlass_t16.txt')
 
-    train_data_x = np.ones((1000, 1)) * 0.2
-    train_data_y = MackeyGlassSeries().generate_data(16, 1000)
-    test_data_x = np.ones((1000, 1)) * 0.2
-    test_data_y = MackeyGlassSeries().generate_data(16, 1000)
+esn = ESN(input_dimension=1, reservoir_dimension=500, output_dimension=1)
+esn.configure(leaky_rate=0.3, spectral_radius=0.95, input_scale=1.0)
 
-    train_data = {'x': train_data_x, 'y': train_data_y}
-    test_data  = {'x': test_data_x,  'y': test_data_y}
+esn.generate_input_weights(input_weights_generator=RandomInputWeightsGenerator())
+esn.generate_reservoir_weights(reservoir_weights_generator=RandomReservoirWeightsGenerator())
 
-    esn.train(data=train_data, trainer=LinearRegressionTrainer())
-    esn.test(data=test_data, tester=NrmseTester())
-
+esn.train(data=data[0: 2000], trainer=LinearRegressionTrainer())
+esn.test(data=data[2001: 4000], tester=NrmseTester(test_mode=NrmseTester.TEST_MODE_GENERATIVE))

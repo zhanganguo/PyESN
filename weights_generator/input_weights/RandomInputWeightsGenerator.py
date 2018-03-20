@@ -1,5 +1,5 @@
 from weights_generator.input_weights.InputWeightsGenerator import InputWeightsGenerator
-import numpy as np
+from numpy import *
 
 
 class RandomInputWeightsGenerator(InputWeightsGenerator):
@@ -9,5 +9,7 @@ class RandomInputWeightsGenerator(InputWeightsGenerator):
     def generate_input_weights(self, esn):
         input_dimension = esn.input_dimension
         reservoir_dimension = esn.reservoir_dimension
-        input_weights = np.random.rand(reservoir_dimension, input_dimension) - 0.5
+        input_scale = esn.input_scale
+        input_weights = random.rand(reservoir_dimension, input_dimension + 1) - 0.5
+        input_weights *= input_scale
         return input_weights
